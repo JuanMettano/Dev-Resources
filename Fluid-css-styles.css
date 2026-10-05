@@ -1,0 +1,17 @@
+
+:root {
+  --color-primary: #134E85;  --color-accent: #E8761A;
+  --color-cyan: #61D6E5;     --color-green: #7AB70B;
+  --color-primary-soft: #EEF5FB;
+  --color-text: #0C2D4D;     --color-text-muted: #5B6B7B;
+  --color-bg-light: #F3F7FA; --color-bg-warm: #FFFDF8;
+  --color-accent-hover: #C25E0C;
+}
+h1 { font-size: clamp(46px, 3vw + 28px, 64px); }
+h2 { font-size: clamp(38px, 2vw + 26px, 50px); }
+h3 { font-size: clamp(31px, 1.3333vw + 23px, 39px); }
+h4 { font-size: clamp(25px, 0.8333vw + 20px, 30px); }
+h5 { font-size: clamp(21px, 0.5vw + 18px, 24px); }
+body, span, button { font-size: clamp(16px, 0.3333vw + 14px, 18px); }
+.hero-container    { margin: clamp(44px, 9.3333vw - 12px, 100px) clamp(18px, 3.6667vw - 4px, 40px); }
+.content-container { margin: clamp(28px, 5.3333vw - 4px, 60px) clamp(12px, 2vw, 24px); }
