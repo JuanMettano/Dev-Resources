@@ -1,12 +1,6 @@
-
-:root {
-  --color-primary: #134E85;  --color-accent: #E8761A;
-  --color-cyan: #61D6E5;     --color-green: #7AB70B;
-  --color-primary-soft: #EEF5FB;
-  --color-text: #0C2D4D;     --color-text-muted: #5B6B7B;
-  --color-bg-light: #F3F7FA; --color-bg-warm: #FFFDF8;
-  --color-accent-hover: #C25E0C;
-}
+/* Fluid scale: these clamp() values scale linearly between 600px and 1200px viewport width.
+   They reach their MINIMUM at 600px (and stay there below it)
+   and their MAXIMUM at 1200px (and stay there above it). */
 h1 { font-size: clamp(46px, 3vw + 28px, 64px); }
 h2 { font-size: clamp(38px, 2vw + 26px, 50px); }
 h3 { font-size: clamp(31px, 1.3333vw + 23px, 39px); }
