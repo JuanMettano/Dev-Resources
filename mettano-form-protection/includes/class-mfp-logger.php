@@ -38,7 +38,7 @@ class MFP_Logger {
 		}
 	}
 
-	public static function write( $reason, $email = '', $form = '' ) {
+	public static function write( $reason, $email = '', $form = '', $ip = null ) {
 		self::prepare_dir();
 		$file = self::file();
 
@@ -47,7 +47,9 @@ class MFP_Logger {
 			file_put_contents( $file, implode( "\n", array_slice( $lines, -500 ) ) . "\n", LOCK_EX );
 		}
 
-		$ip   = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+		if ( null === $ip ) {
+			$ip = class_exists( 'MFP_Filter' ) ? MFP_Filter::client_ip() : '';
+		}
 		$line = implode(
 			' | ',
 			array(

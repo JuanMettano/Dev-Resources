@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       Mettano Form Protection
- * Description:       Silent antispam for Elementor Pro forms (blocked keywords, websites and emails) plus US phone number validation. Settings → Form Protection.
- * Version:           1.0.0
+ * Description:       Silent antispam for Elementor Pro forms: blocked keywords, websites, emails, IPs and suspicious links, honeypot, rate limit per IP and US phone validation. Settings → Form Protection.
+ * Version:           1.1.0
  * Author:            Mettano
  * Author URI:        https://mettano.com
  * Requires at least: 5.7
@@ -13,7 +13,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'MFP_VERSION', '1.0.0' );
+define( 'MFP_VERSION', '1.1.0' );
 define( 'MFP_FILE', __FILE__ );
 define( 'MFP_DIR', plugin_dir_path( __FILE__ ) );
 

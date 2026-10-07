@@ -85,8 +85,18 @@ class MFP_Settings {
 					'digitalmarketing',
 				)
 			),
+			'blocked_ips'     => '',
+			'blocked_tlds'    => implode(
+				"\n",
+				array( 'top', 'xyz', 'ru', 'su', 'click', 'buzz', 'icu', 'cyou', 'sbs', 'cfd', 'monster', 'rest', 'quest', 'bond', 'lol' )
+			),
+			'block_all_links' => 0,
 			'block_cyrillic'  => 1,
 			'block_bot_text'  => 1,
+			'honeypot'        => 1,
+			'rate_limit'      => 1,
+			'rate_max'        => 8,
+			'rate_window'     => 10,
 		);
 	}
 
@@ -160,13 +170,27 @@ class MFP_Settings {
 	}
 
 	/**
+	 * TLDs: "top", ".top" and "*.top" all become "top".
+	 */
+	public static function tld_rules( $text ) {
+		$out = array();
+		foreach ( self::lines( $text ) as $line ) {
+			$line = strtolower( ltrim( $line, '*.' ) );
+			if ( preg_match( '/^[a-z0-9-]{2,24}$/', $line ) ) {
+				$out[] = $line;
+			}
+		}
+		return array_values( array_unique( $out ) );
+	}
+
+	/**
 	 * Sanitize callback for register_setting().
 	 */
 	public static function sanitize( $input ) {
 		$input = is_array( $input ) ? $input : array();
 		$clean = array();
 
-		foreach ( array( 'keywords', 'websites', 'emails' ) as $key ) {
+		foreach ( array( 'keywords', 'websites', 'emails', 'blocked_ips', 'blocked_tlds' ) as $key ) {
 			$value = isset( $input[ $key ] ) ? (string) $input[ $key ] : '';
 			$value = sanitize_textarea_field( $value );
 			// Normalize line endings and drop empty lines / duplicates, keep comments.
@@ -180,8 +204,12 @@ class MFP_Settings {
 			$clean[ $key ] = implode( "\n", $lines );
 		}
 
-		$clean['block_cyrillic'] = empty( $input['block_cyrillic'] ) ? 0 : 1;
-		$clean['block_bot_text'] = empty( $input['block_bot_text'] ) ? 0 : 1;
+		foreach ( array( 'block_all_links', 'block_cyrillic', 'block_bot_text', 'honeypot', 'rate_limit' ) as $key ) {
+			$clean[ $key ] = empty( $input[ $key ] ) ? 0 : 1;
+		}
+
+		$clean['rate_max']    = isset( $input['rate_max'] ) ? max( 1, min( 100, (int) $input['rate_max'] ) ) : 8;
+		$clean['rate_window'] = isset( $input['rate_window'] ) ? max( 1, min( 1440, (int) $input['rate_window'] ) ) : 10;
 
 		return $clean;
 	}
